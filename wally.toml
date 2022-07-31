@@ -1,0 +1,7 @@
+[package]
+name = "kahel/essence"
+version = "1.0.0"
+license = "MIT"
+authors = ["Rivangek"]
+registry = "https://github.com/UpliftGames/wally-index"
+realm = "shared"
