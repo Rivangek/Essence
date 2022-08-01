@@ -31,14 +31,17 @@ function Element.new(Properties)
    self.State = {}
 
    for Property: string, Value: any in self.Properties do
-      if typeof(Value) == "string" and string.match(Value, "STATE;") then -- Is State
-         local StateValues = string.split(Value, ";")
-
-         local StateIdentifier = StateValues[2]
-         local StateInitialValue = StateValues[3]
+      if typeof(Value) == "table" and Value.IsEssenceState then -- Is State
+         local StateIdentifier = Value.StateIdentifier
+         local StateInitialValue = Value.StateInitialValue
 
          self.State[StateIdentifier] = StateInitialValue
-         self.Properties[Property] = self.State[StateIdentifier]
+
+         if Value.StateCompute then
+            self.Properties[Property] = Value.StateCompute(StateInitialValue)
+         else
+            self.Properties[Property] = StateInitialValue
+         end
       end
    end
 

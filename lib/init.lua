@@ -60,12 +60,16 @@ function Essence.build(ElementObject: Element.Class)
    local ProductionStateMeta = {
       __newindex = function(_, index: string, value: any)
          for Property: string, Value: any in OriginalProperties do
-            if typeof(Value) == "string" and string.match(Value, "STATE;") then
-               local StateValues = string.split(Value, ";")
-               local StateIdentifier = StateValues[2]
+            if typeof(Value) == "table" and Value.IsEssenceState then
+               local StateIdentifier = Value.StateIdentifier
 
                if index == StateIdentifier then
-                  ElementInstance[Property] = value
+                  if Value.StateCompute then
+                     ElementInstance[Property] = Value.StateCompute(value)
+                  else
+                     ElementInstance[Property] = value
+                  end
+
                   ElementObject:SetState(StateIdentifier, value)
                end
             end
@@ -97,8 +101,15 @@ function Essence.build(ElementObject: Element.Class)
    return ProductionElement
 end
 
-function Essence.getState(StateIdentifier: string, InitialValue: any)
-   return "STATE;"..StateIdentifier..";"..InitialValue
+function Essence.getState(StateIdentifier: string, InitialValue: any, Compute: ((NewValue: any) -> any)?)
+   local StateObject = {}
+
+   StateObject.StateIdentifier = StateIdentifier
+   StateObject.StateInitialValue = InitialValue
+   StateObject.StateCompute = Compute
+   StateObject.IsEssenceState = true
+
+   return StateObject
 end
 
 --
