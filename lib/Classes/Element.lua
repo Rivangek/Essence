@@ -25,8 +25,8 @@ function Element.new(Properties)
    Properties.Children = nil
    Properties.ClassName = nil
 
+   self.OriginalProperties = table.clone(Properties)
    self.Properties = Properties
-   self.OriginalProperties = table.clone(self.Properties)
 
    self.State = {}
 

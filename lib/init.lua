@@ -44,6 +44,7 @@ function Essence.build(ElementObject: Element.Class)
    ProductionElement.Children = {}
 
    local ProductionState = {}
+   local ProductionChildren = {}
 
    --
 
@@ -53,6 +54,10 @@ function Essence.build(ElementObject: Element.Class)
             return ElementInstance
          elseif index == "State" then
             return ProductionState
+         end
+
+         if ProductionChildren[index] then
+            return ProductionChildren[index]
          end
       end
    }
@@ -94,6 +99,13 @@ function Essence.build(ElementObject: Element.Class)
 
    for Property: string, Value: any in ElementObject.Properties do
       ElementInstance[Property] = Value
+   end
+
+   if ElementObject.Children then
+      for i, ChildElement in ElementObject.Children do
+         ChildElement.Properties.Parent = ElementInstance
+         ProductionChildren[i] = Essence.build(ChildElement)
+      end
    end
 
    --
