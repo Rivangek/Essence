@@ -9,6 +9,7 @@ Note that this library isn't for games, it is oriented to create plugin interfac
 * Component based, modular architecture.
 * State managment, re-render based on the state.
 * Interact with components externally without state managment.
+* Lightweight library, no worry about 10,000 lines source code.
 
 ---
 
