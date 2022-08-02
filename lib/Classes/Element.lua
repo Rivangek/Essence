@@ -3,57 +3,65 @@ Element.__index = Element
 
 -- Typos
 
-export type Class = {
-   Children: { Class },
-   Properties: { [string]: any },
-   Functions: { [string]: (any) -> any },
-   ClassName: string,
+export type ElementObject = {
+	Children: { ElementObject },
+	Properties: { [string]: any },
+	Functions: { [string]: (any) -> any },
+	ClassName: string,
 
-   SetState: (Class, StateIdentifier: string, NewValue: any) -> nil,
-   GetState: (Class, StateIdentifier: string) -> any
+	SetState: (ElementObject, StateIdentifier: string, NewValue: any) -> nil,
+	GetState: (ElementObject, StateIdentifier: string) -> any,
+}
+
+export type ElementFragment = {
+    Children: { ElementObject }
 }
 
 --
 
 function Element.new(Properties)
-   local self = setmetatable({}, Element)
+	local self = setmetatable({}, Element)
 
-   self.Children = Properties.Children
-   self.ClassName = Properties.ClassName
-   self.Functions = {}
+	self.Children = Properties.Children
+	self.ClassName = Properties.ClassName
+	self.Functions = {}
 
-   Properties.Children = nil
-   Properties.ClassName = nil
+	Properties.Children = nil
+	Properties.ClassName = nil
 
-   self.OriginalProperties = table.clone(Properties)
-   self.Properties = Properties
+	self.OriginalProperties = table.clone(Properties)
+	self.Properties = Properties
 
-   self.State = {}
+	self.State = {}
 
-   for Property: string, Value: any in self.Properties do
-      if typeof(Value) == "table" and Value.IsEssenceState then -- Is State
-         local StateIdentifier = Value.StateIdentifier
-         local StateInitialValue = Value.StateInitialValue
+	for Property: string, Value: any in self.Properties do
+		if typeof(Value) == "table" and Value.IsEssenceState then -- Is State
+			local StateIdentifier = Value.StateIdentifier
+			local StateInitialValue = Value.StateInitialValue
 
-         self.State[StateIdentifier] = StateInitialValue
+			self.State[StateIdentifier] = StateInitialValue
 
-         if Value.StateCompute then
-            self.Properties[Property] = Value.StateCompute(StateInitialValue)
-         else
-            self.Properties[Property] = StateInitialValue
-         end
-      end
-   end
+			if Value.StateCompute then
+				self.Properties[Property] = Value.StateCompute(StateInitialValue)
+			else
+				self.Properties[Property] = StateInitialValue
+			end
+		end
+	end
 
-   return self
+    if self.ClassName == "Fragment" then
+		return self :: ElementFragment
+    else
+        return self
+    end
 end
 
 function Element:SetState(StateId: string, StateValue: any)
-   self.State[StateId] = StateValue
+	self.State[StateId] = StateValue
 end
 
 function Element:GetState(StateId: string)
-   return self.State[StateId]
+	return self.State[StateId]
 end
 
 --
