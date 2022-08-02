@@ -13,3 +13,14 @@ nav:
   - Intro:
     - index.md
     - Installation: installation.md
+  - Tutorials:
+    - Creating a Component: tutorials/first_component.md
+    - State Managment: tutorials/state_managment.md
+    - Hierarchy: tutorials/hierarchy.md
+
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences
