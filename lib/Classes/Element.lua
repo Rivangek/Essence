@@ -3,18 +3,14 @@ Element.__index = Element
 
 -- Typos
 
-export type ElementObject = {
-	Children: { ElementObject },
+export type Class = {
+	Children: { Class },
 	Properties: { [string]: any },
 	Functions: { [string]: (any) -> any },
 	ClassName: string,
 
-	SetState: (ElementObject, StateIdentifier: string, NewValue: any) -> nil,
-	GetState: (ElementObject, StateIdentifier: string) -> any,
-}
-
-export type ElementFragment = {
-    Children: { ElementObject }
+	SetState: (Class, StateIdentifier: string, NewValue: any) -> nil,
+	GetState: (Class, StateIdentifier: string) -> any,
 }
 
 --
@@ -53,11 +49,7 @@ function Element.new(Properties)
         self.Children = self.OriginalProperties.Children.StateInitialValue -- Adds support for state managment in children object.
     end
 
-    if self.ClassName == "Fragment" then
-		return self :: ElementFragment
-    else
-        return self :: ElementObject
-    end
+    return self :: Class
 end
 
 function Element:SetState(StateId: string, StateValue: any)

@@ -11,8 +11,8 @@ type ProductionComponent = {
 }
 
 type Essence = {
-    build: (ElementObject: Element.ElementObject) -> ProductionComponent,
-    new: (ClassObject: string, Props: any) -> (Element.ElementObject | Element.ElementFragment),
+    build: (ElementObject: Element.Class) -> ProductionComponent,
+    new: (ClassObject: string, Props: any) -> (Element.Class | Element.Class),
     getState: (StateIdentifier: string, InitialValue: any, Compute: ((newValue: any) -> any)?) -> { any }
 }
 

@@ -1,5 +1,7 @@
 local Classes = script.Parent.Parent:WaitForChild("Classes")
+
 local Element = require(Classes.Element)
+local Fragment = require(Classes.Fragment)
 
 return function(...)
 	local Parameters = {...}
@@ -18,7 +20,7 @@ return function(...)
 
 		return ElementObject
     elseif ClassObject == "Fragment" then
-        
+        return Fragment.new(Props)
 	end
 
 	-- Switch not passed, it's a Roblox class.
