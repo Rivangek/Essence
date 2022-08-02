@@ -28,21 +28,40 @@ return function(ElementObject)
 
 	local ProductionStateMeta = {
 		__newindex = function(_, index: string, value: any)
-			for Property: string, Value: any in OriginalProperties do
-				if typeof(Value) == "table" and Value.IsEssenceState then
-					local StateIdentifier = Value.StateIdentifier
+            if not (typeof(value) == "table" )then
+                for Property: string, Value: any in OriginalProperties do
+                    if typeof(Value) == "table" and Value.IsEssenceState then
+                        local StateIdentifier = Value.StateIdentifier
 
-					if index == StateIdentifier then
-						if Value.StateCompute then
-							ElementInstance[Property] = Value.StateCompute(value)
-						else
-							ElementInstance[Property] = value
-						end
+                        if index == StateIdentifier then
+                            if Value.StateCompute then
+                                ElementInstance[Property] = Value.StateCompute(value)
+                            else
+                                ElementInstance[Property] = value
+                            end
 
-						ElementObject:SetState(StateIdentifier, value)
-					end
-				end
-			end
+                            ElementObject:SetState(StateIdentifier, value)
+                        end
+                    end
+                end
+            else
+                if (typeof(ElementObject.OriginalProperties.Children) == "table" and ElementObject.OriginalProperties.Children.IsEssenceState) then
+                    local StateIdentifier = ElementObject.OriginalProperties.Children.StateIdentifier
+                    local ProductionChildren = {}
+
+                    ElementInstance:ClearAllChildren()
+
+                    for i, Element in value do
+                        Element.Properties.Parent = ElementInstance
+                        ProductionChildren[i] = require(script.Parent.build)(Element)
+                    end
+
+                    ElementObject:SetState(StateIdentifier, {
+                        table.unpack(value),
+                        _Objects = ProductionChildren
+                    })
+                end
+            end
 		end,
 
 		__index = function(_, index: string)

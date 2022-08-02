@@ -26,12 +26,12 @@ function Element.new(Properties)
 	self.ClassName = Properties.ClassName
 	self.Functions = {}
 
+    self.OriginalProperties = table.clone(Properties)
+
 	Properties.Children = nil
 	Properties.ClassName = nil
 
-	self.OriginalProperties = table.clone(Properties)
 	self.Properties = Properties
-
 	self.State = {}
 
 	for Property: string, Value: any in self.Properties do
@@ -49,10 +49,14 @@ function Element.new(Properties)
 		end
 	end
 
+    if typeof(self.OriginalProperties.Children) == "table" and self.OriginalProperties.Children.IsEssenceState then
+        self.Children = self.OriginalProperties.Children.StateInitialValue -- Adds support for state managment in children object.
+    end
+
     if self.ClassName == "Fragment" then
 		return self :: ElementFragment
     else
-        return self
+        return self :: ElementObject
     end
 end
 
