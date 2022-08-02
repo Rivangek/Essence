@@ -1,0 +1,15 @@
+site_name: Essence
+theme:
+  name: material
+  palette:
+    scheme: slate
+    primary: indigo
+    accent: indigo
+  features:
+    - navigation.indexes
+    - navigation.tabs
+  
+nav:
+  - Intro:
+    - index.md
+    - Installation: installation.md
