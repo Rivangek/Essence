@@ -5,7 +5,8 @@ If you're wondering about the hierarchy in the `ProductionElement` result of `Es
 * Element
     * State: `{ [string]: any }`
     * Instance: `Instance`
+    * Parent: `Element` or `nil` 
 
     * Any other index will be considered a child and will error if doesn't exist.
 
-As you can see, it allows you to interact with the element externally without using state managment internally.
+This hierarchy allows you to interact with the element externally without using state managment internally.

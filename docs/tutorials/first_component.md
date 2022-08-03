@@ -40,17 +40,6 @@ PComp.Instance.MouseButton1Click:Connect(function()
 end)
 ```
 
-The hierarchy of the Production Component would be the following:
-
-* PComp
-    * Instance: TextButton
-    * State: { [string]: any }
-    * Increment: () -> nil
-
-    * Label
-        * Instance: TextLabel
-        * State: { [string]: any }
-
 As you can see, you can directly interact like if it was an actual Roblox
 instance, this is extremely helpful when creating plugins.
 

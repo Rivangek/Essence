@@ -16,6 +16,7 @@ nav:
   - Tutorials:
     - Creating a Component: tutorials/first_component.md
     - State Managment: tutorials/state_managment.md
+    - Using Fragments: tutorials/using_fragments.md
     - Hierarchy: tutorials/hierarchy.md
 
 markdown_extensions:
