@@ -73,13 +73,18 @@ return function(ElementObject)
 
                         ElementInstance:ClearAllChildren()
 
-                        for i, Element in value do
+                        local ComputedValue = value
+                        if ElementObject.OriginalProperties.Children.StateCompute then
+                            ComputedValue = ElementObject.OriginalProperties.Children.StateCompute(value)
+                        end
+
+                        for i, Element in ComputedValue do
                             Element.Properties.Parent = ElementInstance
                             ProductionChildren[i] = require(script.Parent.build)(Element)
                         end
 
                         ElementObject:SetState(StateIdentifier, {
-                            table.unpack(value),
+                            table.unpack(ComputedValue),
                             _Objects = ProductionChildren
                         })
                     end

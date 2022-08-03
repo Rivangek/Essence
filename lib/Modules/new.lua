@@ -20,7 +20,15 @@ return function(...)
 
 		return ElementObject
     elseif ClassObject == "Fragment" then
-        return Fragment.new(Props)
+        local FragmentObject = Fragment.new(Props)
+
+		for Index, Value in ClassObject do
+			if typeof(Value) == "function" and not (Index == "Render") then
+				FragmentObject.Functions[Index] = Value
+			end
+		end
+
+        return FragmentObject
 	end
 
 	-- Switch not passed, it's a Roblox class.

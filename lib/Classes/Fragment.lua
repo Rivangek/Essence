@@ -21,7 +21,12 @@ function Fragment.new(Children: { any })
     self.State = {}
 
     if self.OriginalChildren and self.OriginalChildren.IsEssenceState then
-        self.Children = self.OriginalChildren.StateInitialValue
+        if self.OriginalChildren.StateCompute then
+            self.Children = self.OriginalChildren.StateCompute(self.OriginalChildren.StateInitialValue)
+        else
+			self.Children = self.OriginalChildren.StateInitialValue
+        end
+
         self.State.Children = self.Children
     end
 
