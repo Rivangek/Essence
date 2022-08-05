@@ -11,6 +11,7 @@ return function(...)
 
 	if typeof(ClassObject) == "table" then -- It is a component.
 		local ElementObject = ClassObject:Render(Props)
+        ElementObject.ComponentState = ClassObject.State
 
 		for Index, Value in ClassObject do
 			if typeof(Value) == "function" and not (Index == "Render") then

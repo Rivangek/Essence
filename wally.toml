@@ -1,7 +1,7 @@
 [package]
 
 name = "rivangek/essence" # Package name
-version = "1.0.0" # Current version of the package
+version = "1.0.3" # Current version of the package
 license = "MIT"
 authors = ["Rivangek"]
 registry = "https://github.com/UpliftGames/wally-index"

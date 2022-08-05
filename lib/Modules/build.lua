@@ -74,7 +74,7 @@ return function(ElementObject)
 		__newindex = function(_, index: string, value: any)
             if ElementObject.ClassName ~= "Fragment" then
 
-                if not (typeof(value) == "table" ) then
+                if not (typeof(value) == "table") then -- Not children state
                     for Property: string, Value: any in OriginalProperties do
                         if typeof(Value) == "table" and Value.IsEssenceState then
                             local StateIdentifier = Value.StateIdentifier
@@ -90,7 +90,8 @@ return function(ElementObject)
                             end
                         end
                     end
-                else
+                else -- Is Children State
+
                     if (typeof(ElementObject.OriginalProperties.Children) == "table" and ElementObject.OriginalProperties.Children.IsEssenceState) then
                         local StateIdentifier = ElementObject.OriginalProperties.Children.StateIdentifier
                         local ProductionChildren = {}
@@ -112,6 +113,7 @@ return function(ElementObject)
                             _Objects = ProductionChildren
                         })
                     end
+
                 end
 
             else
@@ -143,6 +145,10 @@ return function(ElementObject)
 	for Index, Function in ElementObject.Functions do
 		ProductionElement[Index] = Function
 	end
+
+    if ProductionElement.Initialize then
+        ProductionElement:Initialize()
+    end
 
 	--
 

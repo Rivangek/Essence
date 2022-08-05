@@ -19,8 +19,7 @@ nav:
       - State Managment: tutorials/state_managment.md
     - Advanced:
       - Using Fragments: tutorials/using_fragments.md
-      - Renderize function: tutorials/renderize_function.md
-      - Essence Properties: tutorials/properties.md
+      - Properties from Object: tutorials/properties.md
     - Hierarchy: tutorials/hierarchy.md
 
 markdown_extensions:
