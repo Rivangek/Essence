@@ -1,3 +1,5 @@
+local RunService = game:GetService("RunService")
+
 local function renderChildren(ElementObject, ElementInstance, ProductionElement, ProductionChildren)
 	if ElementObject.Children then
 		for i, ChildElement in ElementObject.Children do
@@ -25,8 +27,10 @@ return function(ElementObject)
 	--
 
 	local ProductionElement = {}
-	local ProductionState = {}
 	local ProductionChildren = {}
+
+    local ProductionState = {}
+    local ProductionProperties = {}
 
 	--
 
@@ -43,8 +47,28 @@ return function(ElementObject)
 			if ProductionChildren[index] then
 				return ProductionChildren[index]
 			end
+
+            return tabl[index]
 		end,
 	}
+
+    local ProductionPropertiesMeta = {
+        __newindex = function(_, index: string, value: any)
+            if ProductionElement.DidUpdate then
+                ProductionElement:DidUpdate(index :: string, value :: any)
+            else
+                if RunService:IsStudio() then
+                    warn("There isn't any DidUpdate method but you're updating the Essence properties.")
+                end
+            end
+
+            ElementObject.EssenceProperties[index] = value
+        end,
+
+        __index = function(_, index: string)
+            return ElementObject.EssenceProperties[index]
+        end
+    }
 
 	local ProductionStateMeta = {
 		__newindex = function(_, index: string, value: any)
@@ -111,6 +135,8 @@ return function(ElementObject)
 
 	setmetatable(ProductionElement, ProductionElementMeta)
 	setmetatable(ProductionState, ProductionStateMeta)
+    setmetatable(ProductionProperties, ProductionPropertiesMeta)
+
 
 	ProductionElement.State = ProductionState
 

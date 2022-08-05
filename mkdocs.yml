@@ -14,9 +14,13 @@ nav:
     - index.md
     - Installation: installation.md
   - Tutorials:
-    - Creating a Component: tutorials/first_component.md
-    - State Managment: tutorials/state_managment.md
-    - Using Fragments: tutorials/using_fragments.md
+    - Basics:
+      - Creating a Component: tutorials/first_component.md
+      - State Managment: tutorials/state_managment.md
+    - Advanced:
+      - Using Fragments: tutorials/using_fragments.md
+      - Renderize function: tutorials/renderize_function.md
+      - Essence Properties: tutorials/properties.md
     - Hierarchy: tutorials/hierarchy.md
 
 markdown_extensions:

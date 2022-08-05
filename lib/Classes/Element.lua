@@ -28,7 +28,9 @@ function Element.new(Properties)
 	Properties.ClassName = nil
 
 	self.Properties = Properties
+    
 	self.State = {}
+    self.EssenceProperties = {}
 
 	for Property: string, Value: any in self.Properties do
 		if typeof(Value) == "table" and Value.IsEssenceState then -- Is State

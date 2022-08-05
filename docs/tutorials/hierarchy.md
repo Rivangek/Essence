@@ -4,6 +4,7 @@ If you're wondering about the hierarchy in the `ProductionElement` result of `Es
 
 * Element
     * State: `{ [string]: any }`
+    * Properties: `{ [string]: any }`
     * Instance: `Instance`
     * Parent: `Element` or `nil` 
 
